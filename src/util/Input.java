@@ -52,9 +52,9 @@ public class Input {
         return userInt;
     }
 
-//    public int getInt(String prompt) {
-//        return userInt;
-//    }
+    public int getInt(String prompt) {
+        return userInt;
+    }
 
     public int getInt(int min, int max) {
         String s = getString("Choose a number.");
@@ -127,7 +127,7 @@ public class Input {
     public static class InputTest {
         public static void main(String[] args) throws Exception {
 
-            Input user1 = new Input();
+//            Input user1 = new Input();
         }
     }
 }
