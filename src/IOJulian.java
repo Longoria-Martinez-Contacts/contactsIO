@@ -1,3 +1,4 @@
+import person.Contact;
 import util.Input;
 
 import java.io.IOException;
@@ -9,9 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class IOJulian {
-    //    String directory = "data";
+//    String directory = "data";
 //    String filename = "contacts.txt";
-//
 //    Path dataDirectory = Paths.get(directory);
 //    Path dataFile = Paths.get(filename);
 
@@ -79,8 +79,15 @@ public class IOJulian {
 
     }
 
+
+
     public static void main(String[] args) {
         Input user1 = new Input();
+        do{
+            String name = user1.getString("Contact Name: ");
+            int phone = user1.getInt("Contact Phone: ");
+            Contact contact1 = new Contact(name, phone);
+        }while(user1.yesNo("Would you like to enter another contact?"));
 //        String directory = user1.getString("Name your Directory");
 //        String directory = "data";
         String directory = "TitansContacts";
@@ -93,6 +100,12 @@ public class IOJulian {
 //        createFile(dataDirectory, dataFile);
 //        writeOnFile(dataFile);
 //        addToFile(dataFile, Arrays.asList("Julio Jones | 2105555550", "Ryan Tannehill | 2105555551"));
-        listContacts(dataFile);
+
+
+
+
+
+
+//        listContacts(dataFile);
     }
 }
