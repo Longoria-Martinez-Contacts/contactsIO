@@ -70,16 +70,44 @@ public class IOJulian {
     static void listContacts(Path fileName) {
         try {
             List<String> contacts = Files.readAllLines(fileName);
-            for(String contact : contacts){
-                System.out.println(contact);
-            }
+//            for(String contact : contacts){
+//                System.out.println(contact);
+//            }
             System.out.println(contacts);
         } catch (IOException iox) {
             iox.printStackTrace();
         }
-
     }
 
+    static void singleContact(Path fileName, String searchName) {
+        try {
+            List<String> contacts = Files.readAllLines(fileName);
+            for (String contact : contacts) {
+                if (contact.contains(searchName)) {
+                    System.out.println(contact);
+                } else {
+                    break;
+                }
+            }
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
+    }
+
+    static boolean listContact(Path fileName, String searchName) {
+        try {
+            List<String> contacts = Files.readAllLines(fileName);
+            for (String contact : contacts) {
+                if (contact.contains(searchName)) {
+                    System.out.println(contact);
+                    break;
+                }
+            }
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
+        return true;
+    }
 
 
     public static void main(String[] args) throws IOException {
@@ -94,26 +122,34 @@ public class IOJulian {
 
         //  do/while loop to add contacts to contacts.txt
         //  This will occur if user selects ->"2"<- 2. Add a new contact
-        do{
-            String name = user1.getString("Contact Name: ");
-            int phone = user1.getInt("Contact Phone: ");
-            Contact contact1 = new Contact(name, phone);
-            addToFile(dataFile, Arrays.asList(contact1.getName() + "|" + contact1.getPhone()));
-            user1.yesNo("Would you like to enter another contact?");
-        }while(user1.yesNo());
+//        do{
+//            String name = user1.getString("Contact Name: ");
+//            int phone = user1.getInt("Contact Phone: ");
+//            Contact contact1 = new Contact(name, phone);
+//            addToFile(dataFile, Arrays.asList(contact1.getName() + "|" + contact1.getPhone()));
+//            user1.yesNo("Would you like to enter another contact?");
+//        }while(user1.yesNo());
 
         //  This will occur if user selects ->"3"<- 3. Search a contact by name
         //  Will need a do/while loop to ask user if they would like to search a different name
         //  Will also need to create if/else for contact listed or no such contact please try again
-        do{
-            String search = user1.getString();
+        do {
+            listContacts(dataFile);
+            String searchContact = user1.getString("Who would you like to search for: ");
+            boolean doesExist = listContact(dataFile, searchContact);
+            if (doesExist) {
+                singleContact(dataFile, searchContact);
+            } else {
+                user1.yesNo("Sorry no one by that name. \nWould you like to search again?");
+                if (user1.yesNo()) {
+                    String searchContact2 = user1.getString("Who would you like to search for: ");
+                    singleContact(dataFile, searchContact2);
+                }
+            }
+        } while (user1.yesNo());
 
-        }while(user1.yesNo());
-
-
-
-
-
+//    listContact(dataFile, "Brown");
+//        searchContacts(dataFile, "Ryan");
 
 
 //        listContacts(dataFile);
