@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class IOJulian {
@@ -81,25 +82,34 @@ public class IOJulian {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Input user1 = new Input();
+        String directory = "TitansContacts";
+//        String directory = user1.getString("Name your Directory");
+//        String directory = "data";
+        String filename = "contacts.txt";
+        Path dataDirectory = Paths.get(directory);
+        Path dataFile = Paths.get(directory, filename);
+        List<String> contacts = Files.readAllLines(dataFile);
+
+        //  do/while loop to add contacts to contacts.txt
+        //  This will occur if user selects ->"2"<- 2. Add a new contact
         do{
             String name = user1.getString("Contact Name: ");
             int phone = user1.getInt("Contact Phone: ");
             Contact contact1 = new Contact(name, phone);
-        }while(user1.yesNo("Would you like to enter another contact?"));
-//        String directory = user1.getString("Name your Directory");
-//        String directory = "data";
-        String directory = "TitansContacts";
-        String filename = "contacts.txt";
+            addToFile(dataFile, Arrays.asList(contact1.getName() + "|" + contact1.getPhone()));
+            user1.yesNo("Would you like to enter another contact?");
+        }while(user1.yesNo());
 
-        Path dataDirectory = Paths.get(directory);
-        Path dataFile = Paths.get(directory, filename);
+        //  This will occur if user selects ->"3"<- 3. Search a contact by name
+        //  Will need a do/while loop to ask user if they would like to search a different name
+        //  Will also need to create if/else for contact listed or no such contact please try again
+        do{
+            String search = user1.getString();
 
-//        createDirectory(dataDirectory);
-//        createFile(dataDirectory, dataFile);
-//        writeOnFile(dataFile);
-//        addToFile(dataFile, Arrays.asList("Julio Jones | 2105555550", "Ryan Tannehill | 2105555551"));
+        }while(user1.yesNo());
+
 
 
 
