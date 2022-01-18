@@ -3,7 +3,7 @@ package util;
 import java.util.Scanner;
 
 public class Input {
-    private Scanner scanner;
+    private final Scanner scanner;
     private String userString;
     private int userInt;
     private double userDouble;
@@ -24,8 +24,6 @@ public class Input {
     public String getString(String prompt) {
         System.out.println(prompt);
         this.userString = scanner.nextLine();
-
-        System.out.println(userString);
         return this.userString;
     }
 
@@ -42,7 +40,7 @@ public class Input {
         System.out.println(prompt);
         this.userString = scanner.nextLine();
         if (userString.equalsIgnoreCase("y") || userString.equalsIgnoreCase("yes")) {
-            return yesNo("Would you like to continue?");
+            return true;
         } else {
             return false;
         }
@@ -52,9 +50,11 @@ public class Input {
         return userInt;
     }
 
-//    public int getInt(String prompt) {
-//        return userInt;
-//    }
+    public int getInt(String prompt) {
+        System.out.println(prompt);
+        this.userInt = scanner.nextInt();
+        return this.userInt;
+    }
 
     public int getInt(int min, int max) {
         String s = getString("Choose a number.");
@@ -127,7 +127,7 @@ public class Input {
     public static class InputTest {
         public static void main(String[] args) throws Exception {
 
-            Input user1 = new Input();
+//            Input user1 = new Input();
         }
     }
 }
