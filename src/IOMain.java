@@ -14,7 +14,7 @@ public class IOMain {
     public static void main(String[] args) throws IOException {
         Input input = new Input();
 
-        System.out.println("WELCOME TO CODEUP DIRECTORY");
+        System.out.println("\nWELCOME TO CODEUP DIRECTORY");
 
 
         String directory = "data";
@@ -224,6 +224,8 @@ public class IOMain {
                     Scanner scan3 =  new Scanner(System.in);
                     String userSearch = scan3.nextLine().trim().toLowerCase();
 
+                    System.out.println("Name | Phone number\n--------------------");
+
                     Path contactPath = Paths.get("data", "contacts.txt");
                     List<String> contactList = Files.readAllLines(contactPath);
 
@@ -257,6 +259,8 @@ public class IOMain {
                         newArray.add(list);
                     }
                     Files.write(Paths.get("data", "contacts.txt"), newArray);
+
+                    System.out.println("Name | Phone number\n--------------------");
 
                     List<String> contacts = Files.readAllLines(dataFile2);
                     for(String contact : contacts) {
