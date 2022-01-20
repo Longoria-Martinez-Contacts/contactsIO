@@ -1,17 +1,17 @@
 import util.Input;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
+import java.io.File;
 
 
 public class IOMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Input input = new Input();
 
         System.out.println("WELCOME TO CODEUP DIRECTORY");
@@ -64,7 +64,7 @@ public class IOMain {
 
             if(Files.exists(dataFile2)) {
                 //.write(Path filepath, List<String list, StandardOpenOption.APPEND[optional])
-                Files.write(dataFile2, Arrays.asList("Sam Jon | 4321987654", "Sammy Shawn | 2107654321", "Samuel Willy | 2109433421", "Samson Jacobs | 2109805432", "Sam I Am | 2109876789"));
+                Files.write(dataFile2, Arrays.asList("Sam Jon | 4321987654", "Tammy Shawn | 2107654321", "Manuel Willy | 2109433421", "Ramson Jacobs | 2109805432", "Dan I Am | 2109876789"));
 //                Files.write(dataFile, Arrays.asList("Hades", "Oeimos", "Apollo"), StandardOpenOption.APPEND);
             }
 
@@ -123,18 +123,25 @@ public class IOMain {
 
 //...
 
-        Scanner scan = new Scanner(System.in);
+        //Commented out old scanner return
+//        Scanner scan = new Scanner(System.in);
+//
+//        scan= scan.useDelimiter("\n");
+//
+//        int userNumber = scan.nextInt();
 
-        scan= scan.useDelimiter("\n");
+//        System.out.println(Paths.get("data", "contacts.txt"));
 
-        int userNumber = scan.nextInt();
+        //old scanner return end
 
 //        BufferedReader br = new BufferedReader(new FileReader("contacts.txt"));
 //        String line;
 //        while ((line = br.readLine()) != null) {
 //            System.out.println(line);
 //        }
-//        System.out.println(Files.readAllLines(dataFile2));
+//        Path2 contactsPath2 = Paths.get("data", "contacts.txt");
+//        List<String> directoryList = Files.readAllLines(contactsPath2);
+//        System.out.println(contactsList.get);
 //        String s = scan.next();
 //        int i = scan.nextInt();
 
@@ -149,40 +156,128 @@ public class IOMain {
 //
 
 
-//        util.Input input = new util.Input();
+//        Input input = new util.Input();
 //        ContactsList Directory = new ContactsList();
-//        boolean cont = true;
-//
+        boolean confirm = true;
+
 //        ContactsList lists = new ContactsList();
-//
-//        do {
-////            input = input.();
-//
-//            switch (input) {
-//
-//                case OPTIONS:
-//                    System.out.println("1. View Contacts\n");
-//                    lists.printAllContacts();
-//
-//                case ADD:
-//
-//                    System.out.println("2. Add A New Contact\n");
-//
-//                case SEARCH:
-//
-//                    System.out.println("3. Search A Contact By Name\n");
-//
-//                case DELETE:
-//
-//                    System.out.println("4. Delete An Existing Contact\n");
-//
-//                case EXIT:
-//
-//                    System.out.println("5. EXIT...\n");
-//                    cont = false;
-//            }
-//
-//        } while (cont);
+
+        do {
+            Scanner scanner = new Scanner(System.in);
+            int userInput = scanner.nextInt();
+            switch (userInput) {
+
+                case 1:
+                    System.out.println("\nName | Phone number");
+                    System.out.println("--------------------");
+                    try {
+                        List<String> contacts = Files.readAllLines(dataFile2);
+                        for(String contact : contacts) {
+                System.out.println(contact);
+                        }
+//            System.out.println(contacts);
+//                        System.out.println(new File("data/contacts.txt"));
+                        System.out.println("\n**Enter an Option (1=CONTACTS, 2=ADD, 3=SEARCH, 4=DELETE or 5=EXIT): ");
+                        break;
+                    } catch(IOException iox) {
+                        iox.printStackTrace();
+
+                    }
+
+                case 2:
+
+//                    System.out.println("To add a new contact input first & last name");
+                    try {
+                        Scanner sc = new Scanner(System.in);
+                        System.out.println("(ADD) To add a new contact input first name: ");
+                        String firstName = sc.next();
+                        System.out.println("Now input last name: ");
+                        String lastName = sc.next();
+                        System.out.println("Last input phone number: ");
+                        String phoneNumber = sc.next();
+//                        System.out.println(firstName + " " + lastName);
+                        String listName = firstName + " " + lastName + " | " + phoneNumber;
+
+                        //try adding 83-85 String contact : contacts or iteration
+                        //new bucket array not saving, used append instead of add
+                        //resets the list everytime option 2 is used
+                        if(Files.exists(dataFile2)) {
+//                            .write(Path filepath, List<String list, StandardOpenOption.APPEND[optional])
+                            Files.write(dataFile2, Arrays.asList("Sam Jon | 4321987654", "Tammy Shawn | 2107654321", "Manuel Willy | 2109433421", "Ramson Jacobs | 2109805432", "Dan I Am | 2109876789"));
+                Files.write(dataFile2, Arrays.asList(listName), StandardOpenOption.APPEND);
+                        }
+
+                        System.out.println("Name | Phone number\n--------------------");
+
+                        List<String> contacts = Files.readAllLines(dataFile2);
+                        for(String contact : contacts) {
+                            System.out.println(contact);
+                        }
+                        System.out.println("\n**Enter an Option (1=CONTACTS, 2=ADD, 3=SEARCH, 4=DELETE or 5=EXIT): ");
+                    break;
+                    } catch (IOException iox) {
+                        iox.printStackTrace();
+                    }
+
+                case 3:
+                    System.out.println("(SEARCH) Input a contact name or phone number: ");
+                    Scanner scan3 =  new Scanner(System.in);
+                    String userSearch = scan3.nextLine().trim().toLowerCase();
+
+                    Path contactPath = Paths.get("data", "contacts.txt");
+                    List<String> contactList = Files.readAllLines(contactPath);
+
+                    boolean nonExist = true;
+                    for (String contact : contactList) {
+                        if (contact.toLowerCase().contains(userSearch.toLowerCase())) {
+                            System.out.println(contact);
+                            nonExist = false;
+                        }
+                    }
+                    if(nonExist){
+                        System.out.println("This person does not exist in the contacts list");
+                    }
+                    System.out.println("\n**Enter an Option (1=CONTACTS, 2=ADD, 3=SEARCH, 4=DELETE or 5=EXIT): ");
+                    break;
+
+
+                case 4:
+                    System.out.println("(DELETE) Input the contact you would like to delete: ");
+                    Scanner scan4 = new Scanner(System.in);
+                    String userDelete = scan4.nextLine().trim();
+
+                    List<String> lists = Files.readAllLines(Paths.get("data", "contacts.txt"));
+                    List<String> newArray = new ArrayList<>();
+
+                    for (String list : lists) {
+                        if (list.toLowerCase().contains(userDelete.toLowerCase())) {
+                            continue;
+                            //need an else sout incase userInput nonExist for delete
+                        }
+                        newArray.add(list);
+                    }
+                    Files.write(Paths.get("data", "contacts.txt"), newArray);
+
+                    List<String> contacts = Files.readAllLines(dataFile2);
+                    for(String contact : contacts) {
+                        System.out.println(contact);
+                    }
+
+                    System.out.println("\n**Enter an Option (1=CONTACTS, 2=ADD, 3=SEARCH, 4=DELETE or 5=EXIT): ");
+                    break;
+
+                case 5:
+
+                    System.out.println("(EXIT)...Exiting Directory...");
+                    confirm = false;
+                    break;
+
+                default:
+                    System.out.println("**" + userInput + " is not an option** \n**Enter an Option (1, 2, 3, 4 or 5): ");
+            }
+
+        } while (confirm);
+
     }
 }
 
